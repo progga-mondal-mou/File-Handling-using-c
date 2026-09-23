@@ -2,7 +2,7 @@
 int main()
 {
     FILE *book;
-    file=fopen("chapter1.txt","w");
+    book = fopen("chapter1.txt","w");
 
     if(book==NULL)
     {
@@ -13,6 +13,6 @@ int main()
         printf("file is opened");
         fclose(book);
     }
-    getchar();    //
+    getchar();    
 
 }
