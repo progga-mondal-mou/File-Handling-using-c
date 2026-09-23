@@ -13,6 +13,6 @@ int main()
         printf("file is opened");
         fclose(book);
     }
-    getchar();    
+    getchar();
 
 }
