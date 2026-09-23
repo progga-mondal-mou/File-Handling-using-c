@@ -14,5 +14,4 @@ int main()
         fclose(book);
     }
     getchar();
-
 }
