@@ -9,7 +9,7 @@ struct Student{
     char Department[20];
 };
 
-void addstudent(){
+void addStudent(){
     struct Student student;
     FILE * file;
     file=fopen("student.dat","ab"); // append + binary mode
@@ -25,15 +25,17 @@ void addstudent(){
         
         printf("New student's ID: ");
         scanf("%d", &student.ID);//for struct
+        getchar();
 
         printf("New student's name: ");
-        scanf(" %48[^\n]", student.Name);//for space soho name
+        fgets(student.Name,sizeof(student.Name),stdin);
 
         printf("New student's Age: "); 
         scanf("%d", &student.Age);
+        getchar();
 
         printf("New student's department: ");
-        scanf(" %19[^\n]",student.Department);
+        fgets(student.Department,sizeof(student.Department),stdin);
 
         fwrite(&student,sizeof(struct Student),1,file);//dat file er jonno,txtte fprintf
         
@@ -145,13 +147,16 @@ void updateStudent(){
                 printf("Enter information to update:\n");
 
                 printf("Enter name to update:");
-                scanf(" %48[^\n]",Student.Name);
+                fgets(Student.Name,sizeof(Student.Name),stdin);
+                getchar();
 
                 printf("Enter age to update:");
                 scanf(" %d",&Student.Age);
 
                 printf("Enter department to update:");
-                scanf(" %19[^\n]",Student.Department);
+                fgets(Student.Department,sizeof(Student.Department),stdin);
+                getchar();
+                
 
                 found=1;
             }
@@ -250,11 +255,11 @@ int main()
         scanf("%d",&press);
         switch(press){
             case 1:
-                addstudent();
+                addStudent();
                 break;
             
             case 2:
-                viewstudent();
+                viewStudent();
                 break;
             
             case 3:
@@ -266,7 +271,7 @@ int main()
                 break;
             
             case 5:
-                deletestudent();
+                deleteStudent();
                 break;
     
             case 6:
