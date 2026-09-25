@@ -237,8 +237,45 @@ void deleteStudent(){
 
 int main()
 {
-    addstudent();
-    viewStudent();
-    updateStudent();
-    deleteStudent();
+    int press;
+       while(1){
+        printf("STUDENT RECORD MANAGEMENT\n");
+        printf("1. Add Student\n");
+        printf("2. View Student\n");
+        printf("3. Search Student\n");
+        printf("4. Update Student\n");
+        printf("5. Delete Student\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d",&press);
+        switch(press){
+            case 1:
+                addstudent();
+                break;
+            
+            case 2:
+                viewstudent();
+                break;
+            
+            case 3:
+                searchStudent();
+                break;
+            
+            case 4:
+                updateStudent();
+                break;
+            
+            case 5:
+                deletestudent();
+                break;
+    
+            case 6:
+                printf("Program exited successfully\n ");
+                exit(0);
+            
+            default:
+                printf("Invalid choice!!!");
+                printf("Please try again.");
+        }
+    }
 }
