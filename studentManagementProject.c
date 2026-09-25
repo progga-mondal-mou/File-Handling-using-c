@@ -27,13 +27,13 @@ void addstudent(){
         scanf("%d", &student.ID);//for struct
 
         printf("New student's name: ");
-        scanf(" %[^\n]", student.Name);//for space soho name
+        scanf(" %48[^\n]", student.Name);//for space soho name
 
         printf("New student's Age: "); 
         scanf("%d", &student.Age);
 
         printf("New student's department: ");
-        scanf(" %[^\n]",student.Department);
+        scanf(" %19[^\n]",student.Department);
 
         fwrite(&student,sizeof(struct Student),1,file);//dat file er jonno,txtte fprintf
         
@@ -90,18 +90,91 @@ void searchStudent(){
                 found=1;
                 break;
             }
-            if (found==0)
-            {
+        }
+        if (found==0)
+         {
                 printf("Student not found\n");
                 return;
-            }
-        }
+         }
     }
     fclose(file);
+}
+
+void updateStudent(){
+    struct Student Student;
+    FILE *file;
+    FILE *tempfile;
+
+    int found=0;
+    int searchID;
+
+    file=fopen("student.dat","rb");
+
+    if(file==NULL)
+    {
+        printf("No student record found!!!\n");
+        return;
+    }
+
+    else
+    {
+    tempfile=fopen("temp.dat","wb");
+
+    if(tempfile==NULL)
+    {
+        printf("No information to update!!!\n");
+        fclose(file);
+        return;
+    }
+    else{
+        printf("Enter student ID to update:");
+        scanf("%d",&searchID);
+
+        while(fread(&Student,sizeof(struct Student),1,file)==1){
+            if(searchID==Student.ID){
+                printf("Student foound!!!\n");
+
+                printf("Current Name: %s\n", Student.Name);
+                printf("Current Age: %d\n", Student.Age);
+                printf("Current Department: %s\n", Student.Department);
+
+                printf("Enter information to update:\n");
+
+                printf("Enter name to update:");
+                scanf(" %48[^\n]",Student.Name);
+
+                printf("Enter age to update:");
+                scanf(" %d",&Student.Age);
+
+                printf("Enter department to update:");
+                scanf(" %19[^\n]",Student.Department);
+
+                found=1;
+            }
+            fwrite(&Student,sizeof(struct Student),1,tempfile);
+        }
+        fclose(file);
+        fclose(tempfile);
+
+        if(found==1){
+            remove("student.dat");
+            rename("temp.dat","student.dat");
+            printf("Updated information successfully!!!\n");
+        }
+        else
+        {
+            remove("temp.dat");
+            printf("Student not found!!!\n");
+        }
+    }
+}
+
+    
 }
 
 int main()
 {
     addstudent();
     viewStudent();
+    updateStudent();
 }

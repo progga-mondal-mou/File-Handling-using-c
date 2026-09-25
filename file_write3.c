@@ -7,7 +7,7 @@ int main()
     char name[20];
     int age;
 
-    school = fopen("student.txt","r");
+    school = fopen("examinee.txt","w");
 
     if(school==NULL)
     {
