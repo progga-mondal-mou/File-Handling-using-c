@@ -87,6 +87,10 @@ void searchStudent(){
         while(fread(&student,sizeof(struct Student),1,file)==1){
             if(searchID==student.ID){
                 printf("Student found\n");
+                printf("ID: %d\n", student.ID);
+                printf("Name: %s\n", student.Name);
+                printf("Age: %d\n", student.Age);
+                printf("Department: %s\n", student.Department);
                 found=1;
                 break;
             }
@@ -152,7 +156,7 @@ void updateStudent(){
                 found=1;
             }
             fwrite(&Student,sizeof(struct Student),1,tempfile);
-        }
+            }
         fclose(file);
         fclose(tempfile);
 
@@ -160,6 +164,68 @@ void updateStudent(){
             remove("student.dat");
             rename("temp.dat","student.dat");
             printf("Updated information successfully!!!\n");
+            }
+        else
+        {
+            remove("temp.dat");
+            printf("Student not found!!!\n");
+            }
+        }
+    }   
+}
+
+void deleteStudent(){
+    struct Student student;
+    FILE *file;
+    FILE *tempfile;
+    
+    int found=0;
+    int deleteID;
+
+    file=fopen("student.dat","rb");
+    if(file ==NULL){
+        printf("No student record found!!!\n");
+        return;
+    }
+    
+    else
+    {  
+        tempfile=fopen("temp.dat","wb");
+        if(tempfile ==NULL){
+            printf("Unable to create temp file!!!\n");
+            fclose(file);
+            return;
+    }
+
+        else
+        {
+            printf("Enter ID to delete: ");
+            scanf("%d",&deleteID);
+
+            while(fread(&student,sizeof(struct Student ),1,file)==1){
+                if(deleteID==student.ID){
+                    printf("Student found!!!\n");
+                    printf("ID: %d\n", student.ID);
+                    printf("Name: %s\n", student.Name);
+                    printf("Age: %d\n", student.Age);
+                    printf("Department: %s\n", student.Department);
+      
+                    found=1; //mille just fread
+                }
+                else
+                {
+                    fwrite(&student,sizeof(struct Student),1,tempfile);     //na mille fwrite in tempfile
+                }
+            }
+        }
+
+        fclose(file);
+        fclose(tempfile);
+
+        if(found ==1){
+            remove("student.dat");
+            rename("temp.dat","student.dat");
+            printf("Deleted student successfully!!!\n");
         }
         else
         {
@@ -169,12 +235,10 @@ void updateStudent(){
     }
 }
 
-    
-}
-
 int main()
 {
     addstudent();
     viewStudent();
     updateStudent();
+    deleteStudent();
 }
